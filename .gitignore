@@ -14,3 +14,11 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Dev
+.idea
+.vscode
+
+# Temp
+*.old*
+*.bak*

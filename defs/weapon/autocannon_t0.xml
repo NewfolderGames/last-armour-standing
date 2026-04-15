@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Def type="core:weapon" namespace="core" name="autocannon_t0">
+    <display>
+        <uiIconSprite>$texture_2d#autocannon_t0_icon</uiIconSprite>
+    </display>
+    <ammo>
+        <clipSize>90</clipSize>
+        <chamberSize>1</chamberSize>
+        <reloadSize>90</reloadSize>
+        <reloadTime>8000</reloadTime>
+    </ammo>
+    <use>
+        <ammoCount>1</ammoCount>
+        <projectileCount>1</projectileCount>
+        <cooldownTime>250</cooldownTime>
+        <recoilMultiplier>1</recoilMultiplier>
+    </use>
+</Def>

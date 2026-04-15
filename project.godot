@@ -1,0 +1,90 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="Last Armour Standing"
+run/main_scene="uid://gjy41r6p24fs"
+config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+AppManager="*uid://bebyjgenuigrc"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
+
+[dotnet]
+
+project/assembly_name="LastArmourStanding"
+
+[gui]
+
+theme/custom="uid://d2how6ikehud8"
+theme/custom_font="uid://dd4rxhb0u0k8w"
+
+[layer_names]
+
+3d_render/layer_1="any"
+3d_render/layer_2="world"
+3d_render/layer_3="movable"
+3d_render/layer_4="light"
+3d_render/layer_5="postprocess"
+3d_render/layer_6="entity"
+3d_render/layer_7="projectile"
+3d_render/layer_8="projectile_uncast"
+2d_render/layer_11="view_game"
+3d_render/layer_11="view_game"
+2d_render/layer_12="view_interface"
+3d_render/layer_12="view_interface"
+2d_render/layer_13="view_worker"
+3d_render/layer_13="view_workder"
+2d_render/layer_15="view_debug"
+3d_render/layer_15="view_debug"
+3d_render/layer_16="sight_player"
+3d_render/layer_17="sight_friendly"
+3d_render/layer_18="sight_enemy"
+3d_render/layer_19="sight_other"
+3d_physics/layer_1="world"
+3d_physics/layer_9="entity"
+3d_physics/layer_10="entity_player"
+3d_physics/layer_11="entity_friendly"
+3d_physics/layer_12="entity_enemy"
+3d_physics/layer_13="entity_other"
+3d_physics/layer_14="projectile"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0
+camera/depth_of_field/depth_of_field_bokeh_shape=0
+camera/depth_of_field/depth_of_field_bokeh_quality=0
+environment/ssao/quality=0
+environment/ssil/quality=0
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+textures/decals/filter=0
+textures/light_projectors/filter=0
+environment/glow/upscale_mode=0
+environment/volumetric_fog/use_filter=0

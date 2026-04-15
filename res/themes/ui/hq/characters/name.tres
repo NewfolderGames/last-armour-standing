@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://bdwxoremktetp"]
+
+[resource]
+font_size = 64
+outline_size = 5
+shadow_size = 0

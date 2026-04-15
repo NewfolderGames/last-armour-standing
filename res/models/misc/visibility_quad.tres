@@ -1,0 +1,6 @@
+[gd_resource type="QuadMesh" format=3 uid="uid://15afk74ywlfo"]
+
+[resource]
+lightmap_size_hint = Vector2i(12, 12)
+flip_faces = true
+size = Vector2(2, 2)

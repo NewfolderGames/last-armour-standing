@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://c4p6ub1ec44bc"]
+
+[resource]
+font_size = 32
+outline_size = 2
+shadow_size = 0

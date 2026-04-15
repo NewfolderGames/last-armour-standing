@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Def type="core:cartridge" namespace="core" name="tracer_t0">
+    <display>
+        <uiIconSprite>$texture_2d#cartridge_tracer_t0_icon</uiIconSprite>
+        <uiHudWeaponSprite>$texture_2d#cartridge_tracer_t0_full</uiHudWeaponSprite>
+    </display>
+    <projectile>
+        <tracer>
+            <visible>true</visible>
+            <aimSpreadReduction>0.1</aimSpreadReduction>
+        </tracer>
+        <damage>
+            <damage>1</damage>
+            <penetration>0</penetration>
+        </damage>
+        <speed>100</speed>
+    </projectile>
+</Def>

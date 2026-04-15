@@ -1,0 +1,1369 @@
+[gd_scene format=4 uid="uid://bjs30faotoqdr"]
+
+[ext_resource type="Script" uid="uid://52hj6687786l" path="res://src/Scripts/Managers/Gameplay/GameplayManager.cs" id="1_mkj3r"]
+[ext_resource type="Environment" uid="uid://b0533xoix7ria" path="res://res/environments/ingame.tres" id="1_uldsx"]
+[ext_resource type="Script" uid="uid://dxva5kmu4rog8" path="res://src/Scripts/Managers/Gameplay/GameCamera.cs" id="2_a0afp"]
+[ext_resource type="Material" uid="uid://db3i0i2suor8h" path="res://res/materials/ground.tres" id="2_yjry4"]
+[ext_resource type="Material" uid="uid://oyhvrsjmsyli" path="res://res/materials/building.tres" id="3_a0afp"]
+[ext_resource type="Script" uid="uid://bv33s6pj3rprc" path="res://src/Scripts/Managers/Gameplay/GameEnvironment.cs" id="4_uwft5"]
+[ext_resource type="Script" uid="uid://cf62prqyffwyw" path="res://src/Scripts/Managers/Gameplay/GameWorldMap.cs" id="5_gxuvb"]
+[ext_resource type="PackedScene" uid="uid://vqap37eelg4w" path="res://res/scenes/entities/player_tank.tscn" id="7_lxc4c"]
+[ext_resource type="Script" uid="uid://cq587owcjmdua" path="res://src/Scripts/Managers/Gameplay/GameWorldEntities.cs" id="8_ra36t"]
+[ext_resource type="Material" uid="uid://dxv1a7cnwng4k" path="res://res/materials/projectile_tracer.tres" id="9_gforc"]
+[ext_resource type="Shader" uid="uid://ctjwdbdaqjvbf" path="res://res/materials/shaders/game_screen_renderer.gdshader" id="13_xnlip"]
+[ext_resource type="Script" uid="uid://bfi4xwxwq6m0e" path="res://src/Scripts/Rendering/Screen/GameScreenRenderer.cs" id="14_al1ao"]
+[ext_resource type="LabelSettings" uid="uid://dgboxutx4scub" path="res://res/themes/ui/hud/weapon/rack_key_text.tres" id="15_0a4j0"]
+[ext_resource type="Texture2D" uid="uid://dwrwrx0acf4ow" path="res://res/textures/ui/round_apds_1.png" id="16_mtg7y"]
+[ext_resource type="LabelSettings" uid="uid://c4p6ub1ec44bc" path="res://res/themes/ui/hud/weapon/rack_count_current.tres" id="17_prs6k"]
+[ext_resource type="LabelSettings" uid="uid://bhm80jenlat8" path="res://res/themes/ui/hud/weapon/rack_count_current_zero.tres" id="18_xc1pv"]
+[ext_resource type="LabelSettings" uid="uid://b023ib3fv6jaw" path="res://res/themes/ui/hud/weapon/count_clip.tres" id="19_0121p"]
+[ext_resource type="LabelSettings" uid="uid://c12g2n3ttalhr" path="res://res/themes/ui/hud/weapon/current_type.tres" id="20_3i4dk"]
+[ext_resource type="LabelSettings" uid="uid://dmc3f3rfowbku" path="res://res/themes/ui/hud/health/current.tres" id="21_557cn"]
+[ext_resource type="LabelSettings" uid="uid://dsp2s3p6dbtay" path="res://res/themes/ui/hud/health/current_zero.tres" id="22_s3ef6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tfihr"]
+size = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_387xr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m81o8"]
+size = Vector3(6, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tjxao"]
+size = Vector3(0.615, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h13av"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_fklp8"]
+_surfaces = [{
+"aabb": AABB(-0.28125, -0.171875, -0.59375, 0.5625, 0.25, 1.125),
+"format": 34896613377,
+"index_count": 72,
+"index_data": PackedByteArray("AAABAAIAAwACAAEABAAAAAIAAwAFAAIABAACAAUABQADAAYABAAFAAcABQAGAAcABAAIAAAABwAIAAQAAAAJAAEACQAAAAgAAwABAAoAAQAJAAoAAwAKAAYACQALAAoACQAIAAsACwAGAAoABwAMAAgADAALAAgADQAHAAYADQAMAAcACwANAAYADAANAAsA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 14,
+"vertex_data": PackedByteArray("OA7/vwAAAADG8f//VVUAADgO//9VVQAAxvH//+L4AAAAAP+/xjEAADgO///i+AAA////v///AAAAAP+///8AADgOAADGMQAAxvH/vwAAAAD///+/xjEAAMbxAADGMQAAOA4AAMbxAADG8QAAxvEAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ivqaq"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.28125, -0.171875, -0.59375, 0.5625, 0.25, 1.125),
+"attribute_data": PackedByteArray("AAAAAP///38AAP9///8AAP////8AAP9/////fwAA//8AAAAA////PwAA/z///wAAAAAAAP///38AAP9///8AAP///38AAP8/////PwAA/38AAAAA/3//PwAA/z//fwAA/3//fwAA/z//f/8/AAD/f////z//f/9//3//P/////8AAP9/////fwAA////f/8/AAAAAAAA/z//fwAAAAD/P/9//3//f/8/AAD/f/9//z//f/9/////PwAAAAAIX/sUdyb7FJE4+xQAAPsUCF8AAA=="),
+"format": 34896613399,
+"index_count": 72,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHwAgACEAHwAiACAAIwAkACUAIwAmACQAJwAoACkAJwAqACgAKwAsAC0ALgAvADAAMQAyADMA"),
+"material": SubResource("StandardMaterial3D_h13av"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 52,
+"vertex_data": PackedByteArray("OA7/vwAAucbG8f//VVW5xjgO//9VVbnGxvH/vwAAucbG8f+/AADe3DgOAADGMd7cxvEAAMYx3tw4Dv+/AADe3DgO///i+OOS////v///45IAAP+////jksbx///i+OOSOA4AAMbx/7/G8QAAxjH/vzgOAADGMf+/xvEAAMbx/7/G8QAAxvEbjQAA/7///xuN////v///G404DgAAxvEbjcbx///i+CbC////v8YxJsL///+///8mwsbx//9VVSbCxvEAAMYxRsD///+///9GwP///7/GMUbAxvEAAMbxRsDG8f+/AAADxsbxAADGMQPG////v8YxA8bG8f//4vj/vzgO//9VVf+/xvH//1VV/784Dv//4vj/vwAA/7/GMUwNOA7//+L4TA0AAP+///9MDTgO//9VVUwNAAD/v///wQQ4DgAAxjHBBAAA/7/GMcEEOA4AAMbxwQQAAP+/xjEHBTgOAADGMQcFOA7/vwAABwXG8f//VVUDysbx/78AAAPK////v8YxA8oAAP+/xjEDyjgO/78AAAPKOA7//1VVA8r///9/////f////3////9/AAD/fwAA/38AAP9/AAD/f////3////9/////f////38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwyphhQMqYYUDKmGFAyphhTodi0S6HYtEuh2LRLodi0SG3j8EBt4/BAbePwQ////f////3////9/////f3vyPjl78j45e/I+OXvyPjmKQul6ikLpeopC6XqKQul69j1Oe/Y9Tnv2PU57DbQtGA20LRgNtC0YLZjwyy2Y8MstmPDL")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_fklp8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uldsx"]
+resource_name = "material_1"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xbmjb"]
+_surfaces = [{
+"aabb": AABB(-0.03125, -0.109375, -0.390625, 0.078125, 0.171875, 0.875),
+"format": 34896613377,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAQADAAIABAACAAMABQACAAQABQAAAAIABAADAAYABgAFAAQABwAAAAUABgAHAAUABgAIAAcABwAIAAAABgADAAgAAAAJAAEACAAJAAAAAQAKAAMACgAIAAMACQAKAAEACgALAAgACAALAAkACQALAAoA"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("///oogAAAAD//wAAkeQAAP//6KL//wAAAADoov//AAD///////8AAP////8AAAAAAAD/////AAAAAP//AAAAAAAA6KIAAAAA//8AAG0bAAAAAAAAkeQAAAAAAABtGwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_isnq0"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-0.03125, -0.109375, -0.390625, 0.078125, 0.171875, 0.875),
+"attribute_data": PackedByteArray("//8AAAAA/38AAAAA////f////38AAAAA//8AAAAA/38AAP////8AAP////8AAAAA/////wAAAAD//wAAAAD//////38AAAAA//8AAAAA/3///wAAAAD/fwAAAAD///9//1P/f/8//4//P/9//1P/j//f/z//H/9P/x//P//f/0//QwAA/y//D/8vAAD/Q/8P/7//PwAA/08AAP8//7//Tw=="),
+"format": 34896613399,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUA"),
+"material": SubResource("StandardMaterial3D_uldsx"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 40,
+"vertex_data": PackedByteArray("///oogAA/7///wAAkeT/v///6KL///+///8AAG0b/78AAAAAkeT/vwAA6KIAAP+/AADoov///78AAAAAbRv/vwAA//////+//////wAA/7//////////vwAA//8AAP+///8AAG0b/78AAAAAkeT/v///AACR5P+/AAAAAG0b/7///wAAkeTenAAA6KL//96c///oov//3pwAAAAAkeTenAAA6KIAAP////8AAG0b/////+iiAAD//wAAAABtG///////////AIAAAOii//8AgAAA/////wCA///oov//AID/////AAD/v///6KL///+//////////7///+iiAAD/vwAA//8AAP/////oogAA////////AAD//wAA6KIAAP//AAD//////78AAOiiAAD/vwAA//8AAP+/AADoov///7//fwAA/38AAP9/AAD/fwAA/3////9/////f////3///////3////9/////f////38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/f4+i//+Pov//j6L//4+i////f////3////9/////f////38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_xbmjb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjry4"]
+resource_name = "material_2"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_5idjd"]
+_surfaces = [{
+"aabb": AABB(0, -0.03125, -0.4375, 0.09375, 0.125, 0.96875),
+"format": 34896613377,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAABAAMABQADAAAABQAEAAMABAAGAAEAAgABAAYABAAFAAcABgAEAAgABAAHAAgABgAIAAkACAAKAAcACAAJAAoACwAGAAkAAgAGAAsACwAJAAoACwAMAAIADQALAAoACwANAAwADgAHAAoADQAKAA4ADgAPAAcABQAPAAcAEAANAA4ABQARAA8AAAARAAUAEgAPAA4AEAAOABIAEQATAA8AEgATAA8AFAASABMAEQAUABMAFAAQABIAAAAVABEAFQAUABEAAgAVAAAAAgAMABUAFQAWABQADAAWABUAFwAQABQAFwAUABYADAAXABYADQAQABcADQAXAAwA"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAD//8YYAAD////fQggAAP///9/GGAAAAAD//0IIAAAAAP9/AAAAAAAA/3/GGAAA////fwAAAAAAAP8/xhgAAAAAAABCCAAA//8AAEIIAAD///8/xhgAAP///3/GGAAA////3zjnAAD///9/OOcAAP///z845wAAAAD/PzjnAAD///9///8AAAAA/3845wAA//8AALz3AAAAAAAAvPcAAAAA/3///wAAAAD//zjnAAAAAP//vPcAAP///9+89wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8ix7g"]
+resource_name = "blockbench_export_mesh3"
+_surfaces = [{
+"aabb": AABB(0, -0.03125, -0.4375, 0.09375, 0.125, 0.96875),
+"attribute_data": PackedByteArray("//9UVQAAAAAAAFRV//8AAAAAAAD///9///8AAAAA/38AAP9///8AAAAAAAD///9/qqr/f///AACqqgAA////f/////8AAKqq//+qqgAA//+qqgAA////f6qq/3///wAAVFX/fwAAAABUVQAAAAD/f6qq/39UVQAAqqoAAFRV/38AAAAA//9UVQAAVFX//wAAAABUVf//qqoAAKqq//9UVVRVAAAAAP9/VFX/fwAAAACqqgAAVFX/f6qq/39UVQAAAACqqv///////6qqAAD//wAAVFX//6qq//9UVQAAqqoAAP8f/xf/DwAA/w//F/8f/2//H/+H/w//b/8P/4f/H/8v/w//RwAA/y8AAP9H/w8AAP9P/6//PwAA/z//r/9P/y//T//f/z//L/8//9//T/9//2//l/9f/3//X/+X/28AAP9v/xf/XwAA/1//F/9v/z//j/9X/3//P/9//1f/jw=="),
+"format": 34896613399,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0AQABBAEIAQABDAEEARABFAEYARABHAEUASABJAEoASABLAEkATABNAE4ATABPAE0AUABRAFIAUABTAFEAVABVAFYAVABXAFUA"),
+"material": SubResource("StandardMaterial3D_yjry4"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 88,
+"vertex_data": PackedByteArray("AAD//8YYwQT////fQgjBBP///9/GGMEEAAD//0IIwQT////fvPcJAwAA/3///4wEAAD//7z3iwb///9///+yAAAA/38AAAAT////30II9RIAAP//QggME////38AAOASAAD/f8YYAAAAAP//QggAAAAA///GGAAAAAD/fwAAAAAAAAAAQgj//////z/GGP//AAD/P8YY/////wAAQgj//////9/GGP+/////fwAA/7////9/xhj/v////99CCP+/////fzjn/7/////fvPf/v////9845/+/////f////7////9/xhj/v////9845/+/////38YY/7////9/OOf/v///AAC89///AAD/Pzjn//////8/OOf//wAAAAC89///////Pzjn//8AAP8/xhj//////z/GGP//AAD/Pzjn//8AAP//OOcAAAAA/3///wAAAAD/fzjnAAAAAP//vPcAAAAA///GGAAAAAD/fzjnAAAAAP9/xhgAAAAA//845wAA////3zjnwQQAAP//vPfBBAAA//8458EE////37z3wQT////fxhjBBAAA//8458EEAAD//8YYwQT////fOOfBBP///3///+U+////PzjnrT///wAAvPfYPf///3845/8/AAD/fzjndD8AAAAAvPfpPwAA/z8459g9AAD/f////z8AAP9///8bbf//AAC89xttAAAAALz3G23///9///8bbf///3845/8/////P8YY/z////8/OOf/P////3/GGP8/AAD/f8YY/z8AAP8/OOf/PwAA/z/GGP8/AAD/fzjn/z8AAP9/AADlPgAA/z/GGK0/AAAAAEII2D0AAP9/xhj/P////3/GGHQ///8AAEII6T////8/xhjYPf///38AAP8/////fwAAAAAAAAAAQggAAP//AABCCAAAAAD/fwAAAAB0PRYFdD0WBXQ9FgV0PRYF9BcOAxoYmwJMGAICuxe9Ayr2NXnI92h7F/Rjdl367H7/P/9//z//f/8//3//P/9//38az/9/Gs//fxrP/38az/9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/47D/f+Ow/3/jsP9/47D/f/+//3//v/9//7//f/+//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//390PRYFdD0WBXQ9FgV0PRYFdD0WBXQ9FgV0PRYFdD0WBf5fABCbbLIJ8laGFP9/AADoc9Hnh3oP9Xhr8db/f///AAD/fwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///AKD+72OTTPYMqXjr/3///xaMLRh3he8KhpQNKf9/AABxmP//cZj//3GY//9xmP//")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_5idjd")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sfj3u"]
+_surfaces = [{
+"aabb": AABB(-0.046875, -0.109375, -0.390625, 0.078125, 0.171875, 0.875),
+"format": 34896613377,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAwACAAQAAgAFAAQAAgABAAUAAwAEAAYABQAGAAQAAQAHAAUABQAHAAYACAAGAAcAAQAIAAcACAADAAYAAAAJAAEACQAIAAEAAwAKAAAACgAJAAAACAAKAAMACgALAAkACQALAAgACAALAAoA"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("AAAAAJHkAAAAAOiiAAAAAAAA6KL//wAA///oov//AAAAAP////8AAAAA//8AAAAA////////AAD/////AAAAAP//6KIAAAAAAAAAAG0bAAD//wAAkeQAAP//AABtGwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_3t4vf"]
+resource_name = "blockbench_export_mesh4"
+_surfaces = [{
+"aabb": AABB(-0.046875, -0.109375, -0.390625, 0.078125, 0.171875, 0.875),
+"attribute_data": PackedByteArray("AAD/f///AAAAAAAA////fwAAAAD///9///8AAAAA/3///wAAAAD///////8AAAAAAAAAAP///////wAAAAD//wAAAAD///9///8AAAAA/38AAP9///8AAAAAAAD///9//z//j/9T/3//P/9//1P/j/8f/0//3/8//x//P//f/0//L/8P/0MAAP8vAAD/Q/8PAAD/T/+//z8AAP8//7//Tw=="),
+"format": 34896613399,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUA"),
+"material": SubResource("StandardMaterial3D_uldsx"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 40,
+"vertex_data": PackedByteArray("AAAAAJHkAAAAAOiiAAAAAAAA6KL//wAAAAAAAG0bAAD//+iiAAAAAP//AACR5AAA///oov//AAD//wAAbRsAAAAA//8AAAAA////////AAAAAP////8AAP////8AAAAA//8AAJHkAAAAAAAAbRsAAAAAAACR5AAA//8AAG0bAAD//+ii//8AAAAAAACR5AAAAADoov//AAD//wAAkeQAAAAAAABtG98c///oogAA3xwAAOiiAADfHP//AABtG98c///oov//AAAAAP////8AAP///////wAAAADoov//AAAAAOii//8AAAAA//8AAAAAAAD/////AAAAAOiiAAAAAAAA6KIAAAAA/////wAAAAAAAP//AAAAAP//6KIAAAAA///oogAAAAD///////8AAP////8AAAAA///oov//AAD/P/9//z//f/8//3//P/9//7//f/+//3//v/9//7//f/9//7//f/+//3//v/9//7//f/8//3//P/9//z//f/8//39vXf9/b13/f29d/39vXQAA/38AAP9/AAD/fwAA/3//f/9//3//f/9//3//f/9//z//f/8//3//P/9//z//f////3////9/////f////3//v/9//7//f/+//3//v/9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_sfj3u")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lh26m"]
+_surfaces = [{
+"aabb": AABB(-0.09375, -0.03125, -0.4375, 0.09375, 0.125, 0.96875),
+"format": 34896613377,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAAADAAEAAAAEAAMAAwAFAAEAAwAEAAUAAAAGAAQABgAAAAIABwAFAAQACAAEAAYABwAEAAgACAAGAAkACgAIAAcACgAJAAgACQAGAAsACQALAAoABgACAAsADAAFAAcABwANAAoABwAMAA0ACgALAA4ACgAOAA0ADwALAAIADwAOAAsAEAAPAAIAEAACAAEAEQABAAUAEQAQAAEADAARAAUAEgAPABAAEwARAAwAFAAQABEAFAASABAAEwAUABEAEgAVAA8AFAAVABIAFQAOAA8ADAATABYAFgAUABMADAAWAA0AFAAXABUAFQAXAA4AFgAXABQADQAOABcADQAXABYA"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAD/30IIAAD/////xhgAAAAA/9/GGAAA/////0IIAAD///9/AAAAAP///3/GGAAAAAD/fwAAAAD///8/xhgAAP//AABCCAAAAAAAAEIIAAAAAP8/xhgAAAAA/3/GGAAA////PzjnAAAAAP8/OOcAAAAA/3845wAAAAD/3zjnAAD/////OOcAAP///3845wAA/////7z3AAD//wAAvPcAAP///3///wAAAAD/37z3AAAAAAAAvPcAAAAA/3///wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6mavj"]
+resource_name = "blockbench_export_mesh5"
+_surfaces = [{
+"aabb": AABB(-0.09375, -0.03125, -0.4375, 0.09375, 0.125, 0.96875),
+"attribute_data": PackedByteArray("AAAAAP//VFUAAFRV//8AAP///38AAAAA//8AAAAA/3///wAAAAD/fwAAAAD///9///8AAKqq/3+qqgAA////fwAAqqr///////+qqgAA//////9/qqoAAKqq/3///wAAAAAAAFRV/39UVQAAAAD/f1RVAACqqv9/qqoAAFRV/3///1RVAAAAAAAAVFX//wAA//+qqgAAVFUAAKqq//9UVQAA/39UVQAAVFX/fwAAAABUVf9/qqoAAKqq/39UVQAA/////wAAqqr//6qqAAD/////qqoAAFRV//9UVQAAqqr/F/8PAAD/HwAA/w//F/8f/4f/D/9v/x//b/8P/4f/H/9HAAD/L/8P/y8AAP9H/w//r/8/AAD/TwAA/z//r/9P/9//P/8v/0//L/8//9//T/+X/1//f/9v/3//X/+X/2//F/9fAAD/bwAA/1//F/9v/1f/f/8//4//P/9//1f/jw=="),
+"format": 34896613399,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0AQABBAEIAQABDAEEARABFAEYARABHAEUASABJAEoASABLAEkATABNAE4ATABPAE0AUABRAFIAUABTAFEAVABVAFYAVABXAFUA"),
+"material": SubResource("StandardMaterial3D_yjry4"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 88,
+"vertex_data": PackedByteArray("AAD/30IIRsD/////xhhGwAAA/9/GGEbA/////0IIRsD///9///+qkwAA/9+891yT/////7z3PZQAAP9///8gkwAA/99CCJn9////fwAA9f3/////Qghv/gAA/38AAAv9/////0II/7////9/xhj/v//////GGP+/////fwAA/78AAP8/xhgbLf//AABCCBst////P8YYGy0AAAAAQggbLQAA/38AAAAAAAD/38YYAAAAAP9/xhgAAAAA/99CCAAAAAD/37z3AAAAAP9/OOcAAAAA/9845wAAAAD/f///AAAAAP/fOOcAAAAA/3/GGAAAAAD/38YYAAAAAP9/OOcAAP///z845+NSAAAAALz341IAAP8/OOfjUv//AAC89+NS////P8YY/z8AAP8/OOf/PwAA/z/GGP8/////Pzjn/z////9/////v/////845/+/////fzjn/7//////vPf/v////3845/+//////8YY/7////9/xhj/v/////845/+//////7z3RsAAAP/fOOdGwP////8450bAAAD/37z3RsD/////OOdGwAAA/9/GGEbA/////8YYRsAAAP/fOOdGwAAA/z845976AAD/f///gPYAAAAAvPey8gAA/3845/////8AALz3Tv3///9/OOdT+f///z8457Ly////f/////8AAAAAvPf//////3////////8AALz3//8AAP9//////wAA/z/GGP//AAD/fzjn//8AAP8/OOf//wAA/3/GGP//////Pzjn//////9/xhj//////z/GGP//////fzjn//////8/xhje+v///38AAID2//8AAEIIsvL///9/xhj//wAAAABCCE79AAD/f8YYU/kAAP8/xhiy8gAA/38AAP////8AAEIIG+0AAP9/AAAb7QAAAABCCBvt////fwAAG+3o9i2S6PYtkuj2LZLo9i2SvPUnoVXzs5yV+G6mG+/flCZ8WORSes7i+3fW4Bh/0eb/fwAA/38AAP9/AAD/fwAA////f////3////9/////f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f////3////9/////f////3////9/////f////3////9//38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AADo9i2S6PYtkuj2LZLo9i2S6PYtkuj2LZLo9i2S6PYtkob6u8Il9uvEe/LAxv8//3+JvhN9ebz0eD25fHL/v/9//3+NZ/9/jWf/f41n/3+NZ/8//3//P/9//z//f/8//3//v/9//7//f/+//3//v/9/eAVDPdkJEzuDDT45/7//f3VB64KFQwqHwUaCjf8//38AAP9/AAD/fwAA/38AAP9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lh26m")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0afp"]
+resource_name = "material_3"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_by6gu"]
+_surfaces = [{
+"aabb": AABB(-0.21875, 0, -0.21875, 0.4375, 0.109375, 0.4375),
+"format": 34896613377,
+"index_count": 180,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAAAEAAEABQAAAAMAAAAFAAQABgAEAAUABQAHAAYABAAGAAcACAAHAAUACAAFAAMABAAHAAkACAAKAAcACQAHAAoABAAJAAsABAALAAEADAAIAAMACAANAAoADAANAAgADQAOAAoADgANAAwADwAKAA4ADAADABAAAwACABAAEQAKAA8ACQAKABEADgASAA8AEQAPABIADgAMABMAEwASAA4AEwAMABQADAAQABQAEgATABUAEwAUABUAEQASABYAEgAVABYACQARABcAEQAWABcACQAXAAsAGAAXABYAGQAWABUAGAAWABkAFQAUABkAGAAaABcAGgALABcAGQAaABgAFAAbABkAGgAZABsAHAAbABQAGgAbABwAHAAUABAAGgAdAAsAGgAcAB0AHQABAAsAEAAeABwAHgAdABwAEAACAB4AAQAeAAIAHwAdAB4AHQAfAAEAHgABAB8A"),
+"name": "material_3",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 32,
+"vertex_data": PackedByteArray("kWT//9s2AAC2rQAAAAAAAG2b///bNgAAkWT//21bAABIUgAAAAAAAJIk//9mQwAAkiQAAJIkAAAAAAAASFIAAJIk//+2bQAAbVsAAK9VAAAAAAAAtq0AAJGkAACvVQAAkWT//5GkAACSJP//SJIAANs2//8jyQAAkiQAAGzbAABtm///bVsAAG1bAADTngAASFIAAP//AACRZP//bNsAAG2b//+RpAAAbZv//2zbAAC2rQAA//8AAJGkAADTngAAbNsAAGzbAAAjyf//I8kAAP//AAC2rQAAbNv//0iSAABs2///tm0AAP//AABIUgAAbNv//2ZDAABs2wAAkiQAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_n6cop"]
+resource_name = "blockbench_export_mesh6"
+_surfaces = [{
+"aabb": AABB(-0.21875, 0, -0.21875, 0.4375, 0.109375, 0.4375),
+"attribute_data": PackedByteArray("qqoAAFRV/39UVQAAqqr/f1RV//+qqqqqqqr//1RVqqpUVaqqqqpUVaqqqqpUVVRVVFVUVaqqAACqqlRVVFUAAFRVqqqqqlRVqqqqqlRVVFVUVVRVqqoAAKqqVFVUVQAAVFX/f6qqAACqqv9/VFUAAFRV//+qqqqqqqr//1RVqqr//6qqqqr//6qqqqr///////9UVaqqqqqqqlRV//+qqv//AACqqlRVqqoAAP//VFX//1RVqqqqqqqqVFX//6qqVFX/f6qqAACqqv9/VFUAAFoJAABnHuQWAADkFgAA5BYMFQAAZx7kFpwFAABnHhEaAAARGiUFAABnHpojAACaIzsDmCWIHAAAAAAAAAkiAAAAAOodnBnqHQAAAAC3IyghkCEAAJALgh8sJYIfAAAAAPgS0iEAAAAATBkAAD8BAACcGSweAAAsHoISAAD/Cz8gAAAAAJwZPR0AAD0dFA8AAKqq/////6qqqqqqqv////+qqqqq//9UVaqqVFX//6qqqqpUVf//AACqqgAA//9UVaqqqqr//1RVqqpUVf//qqqqqgAAVFX/f6qq/39UVQAAAADkFmce5BZaCQAAZx7kFgwVAAAAAOQWAAARGmceERqcBQAAAACaI2cemiMlBQAAAAAAAIgcAAA7A5glnBnqHQAA6h0JIgAAkCEAALcjKCEAAAAAAAAAACwlgh+QC4IfTBkAAAAAAAD4EtIhAAAsHpwZLB4/AQAAAAAAAP8LPyCCEgAAFA8AAAAAPR2cGT0d"),
+"format": 34896613399,
+"index_count": 180,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANwA4ADkAOgA7ADwAPQA+AD8AQABBAEIAQwBEAEUARgBHAEgASQBKAEsATABNAE4ATwBQAFEAUgBTAFQAVQBWAFcAWABZAFoAWABbAFkAXABdAF4AXABfAF0AYABhAGIAYABjAGEAZABlAGYAZABnAGUAaABpAGoAaABrAGkAbABtAG4AbwBwAHEAcgBzAHQAdQB2AHcAeAB5AHoAewB8AH0AfgB/AIAAgQCCAIMAhACFAIYAhwCIAIkAigCLAIwAjQCOAI8A"),
+"material": SubResource("StandardMaterial3D_a0afp"),
+"name": "material_3",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 144,
+"vertex_data": PackedByteArray("kWT//9s2//+2rQAAAAD//22b///bNv//SFIAAAAA//9IUgAAAAD/v5GkAACvVf+/tq0AAAAA/79tWwAAr1X/v21bAACvVf+/kaQAANOe/7+RpAAAr1X/v21bAADTnv+/bVsAANOe/7+2rQAA//+5wJGkAADTnv+/SFIAAP///7+RZP//kaT/v22b//9tWxDAbZv//5GkAcCRZP//bVv/v5Fk//9tW/+/bZv//9s2/79tm///bVsQwJFk///bNv+/SFIAAP//JpVtm///bNsmlbatAAD//yaVkWT//2zbJpWRZP//bNv/v22b//+RpAHAbZv//2zb/7+RZP//kaT/v///AABIUv+/tq0AAAAA/7+RpAAAr1X/v2zbAACSJHjEbNv//7ZtAMBtm///kaQBwG2b//9tWxDAbNv//0iSx8Bs2wAAbNu+wJGkAADTnv+/tq0AAP//ucD//wAAtq0XwP//AAC2rRfAkaQAAK9V/7+RpAAA057/v///AABIUv+///8AALatrsJs2///tm2uwv//AABIUq7CbNv//0iSrsJtm///kaQ2zmzb//9IkjbOI8n//yPJNs5tm///bNt0wW2b//+RpHTBI8n//yPJdMFtm///bVtU1Wzb//9mQ1TVbNv//7ZtVNVtm///bVts+m2b///bNmz6bNv//2ZDbPq2rQAAAACfHWzb//9mQ58dbZv//9s2nx1s2///ZkPSDbatAAAAANMNbNsAAJIk0w0jyf//I8lPBLatAAD//08EbZv//2zbTwRs2wAAbNsfBbatAAD//x8FI8n//yPJHwX//wAAtq2rtyPJ//8jyau3bNv//0iSq7cjyf//I8l5p///AAC2rXmnbNsAAGzbeads2///ZkOuwv//AABIUq7CbNv//7ZtrsJs2wAAkiTn2///AABIUufbbNv//2ZD59tIUgAAAAAPAQAAAABIUjcAbVsAAK9VcACSJAAAkiRAE5Fk//+RpL0CkiT//7ZtjgCRZP//bVsBCJIk//9IkgEIbVsAANOeJACSJAAAbNvRB0hSAAD//0ATAAAAALatyQJtWwAAr1VwAAAAAAC2rckCbVsAANOeJAAAAAAASFI3AJIk//+2bd8OAAAAALat3w4AAAAASFLfDpIk//9Ikt8O2zb//yPJuyKSJP//SJK7IpFk//+RpLsi2zb//yPJ7QqRZP//kaTtCpFk//9s2+0KkiT//7ZtqiqSJP//ZkOqKpFk//9tW6oqkiT//2ZDnj+RZP//2zaeP5Fk//9tW54/kWT//9s2ofiSJP//ZkOh+EhSAAAAAKH4kiQAAJIk9+RIUgAAAAD35JIk//9mQ/fkkWT//2zbs5tIUgAA//+zm9s2//8jybOb2zb//yPJcJ9IUgAA//9wn5IkAABs23CfkiT//0iSDA7bNv//I8kMDgAAAAC2rQwOkiQAAGzbtAYAAAAAtq20Bts2//8jybQGkiT//7Zt3w4AAAAASFLfDpIk//9mQ98OkiT//2ZDugoAAAAASFK6CpIkAACSJLoK/39u3f9/bt3/f27d/39u3QAA/394AO+A7QDbgQAA/38AAP9/TQDYf3gA74AAAP9/AAD/fzIbZnJNANh/AAD/f////39r9smEn/yvgf///3////9/////f2v2yYT///9/////f////3////9/////f////3+f/K+B////f////3/2AIR/7QDbgXgA74BjGsW0k/01gZ/8r4Fr9smE/fH9Y3wbQXJNANh/MhtmcqYFS4umBUuLeADvgE0A2H/2AIR/ZqwzFmasMxZmrDMWZqwzFjXabDQ12mw0NdpsNDPuaFwz7mhcM+5oXFTVqipU1aoqVNWqKvXC7AX1wuwF9cLsBdnwMITZ8DCE2fAwhHvaxYV72sWFe9rFhZyQIJmckCCZnJAgmROdBZATnQWQE50FkB+2dB8ftnQfH7Z0H8WvQyDFr0Mgxa9DIGasMxZmrDMWZqwzFueWbwfnlm8H55ZvB2o/1P7Bfx5AwT+C/3I25ez5goK+nICwv1+Iz7svxGAI1n8UQM53GETlbIxJfD74/ME/gv98Pvj81n8UQMF/HkD+8H84/vB/OP7wfzj+8H8489DoIfPQ6CHz0OghnsU+C57FPguexT4LVNWqKlTVqipU1aoql/Uva5f1L2uX9S9rWIMp2liDKdpYgynajYbA5o2GwOaNhsDmDMWlrQzFpa0MxaWtbqhgyW6oYMluqGDJn+x/LZ/sfy2f7H8tN/HAJDfxwCQ38cAk/vB/OP7wfzj+8H84KPqBUij6gVIo+oFS")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_by6gu")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xv5uk"]
+_surfaces = [{
+"aabb": AABB(-0.0234375, -0.0234375, -0.15625, 0.046875, 0.046875, 0.1875),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAwAAAAIAAAAEAAEAAQAFAAMABAAFAAEAAwAGAAAABgAEAAAABQAGAAMABgAHAAQABAAHAAUABQAHAAYA"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAA////////AAAAAAAAAAAAAP////8AAAAA//8AAP//AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xtgww"]
+resource_name = "blockbench_export_mesh7"
+_surfaces = [{
+"aabb": AABB(-0.0234375, -0.0234375, -0.15625, 0.046875, 0.046875, 0.1875),
+"attribute_data": PackedByteArray("AAD/f///AAAAAAAA////fwAAAAD///9///8AAAAA/3///wAAAAD///////8AAAAAAAAAAP///////wAAAAD//wAAAAD///9///8AAAAA/38AAP9///8AAAAAAAD///9/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_yjry4"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//wAAAAAAAAAA//8AAAAA////////AAAAAP////8AAP////8AAAAA//8AAP//AAAAAAAAAAAAAAAAAAD//wAA//8AAAAAAAD///////8AAAAAAAD//wAAAAD/////AAD//wAA//8AAAAAAAAAAAAA/////wAAAAAAAP//AAAAAP//AAAAAAAA/z//f/8//3//P/9//z//f/+//3//v/9//7//f/+//3//f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9//3//f/9//3//f/9//3////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_xv5uk")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tku3p"]
+_surfaces = [{
+"aabb": AABB(-0.015625, -0.015625, -0.3125, 0.03125, 0.03125, 0.3125),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAwAAAAIAAAAEAAEAAQAFAAMABAAFAAEAAwAGAAAABgAEAAAABQAGAAMABgAHAAQABAAHAAUABQAHAAYA"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAD//wAA//8AAP///////wAAAAD/////AAD//wAAAAAAAAAAAAD//wAAAAD//wAAAAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xs48a"]
+resource_name = "blockbench_export_mesh8"
+_surfaces = [{
+"aabb": AABB(-0.015625, -0.015625, -0.3125, 0.03125, 0.03125, 0.3125),
+"attribute_data": PackedByteArray("//8AAAAA/38AAAAA////f////38AAAAA//8AAAAA/38AAP////8AAP////8AAAAA/////wAAAAD//wAAAAD//////38AAAAA//8AAAAA/3///wAAAAD/fwAAAAD///9/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_yjry4"),
+"name": "material_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAA/7///wAA////v/////////+///8AAAAA/78AAAAA////vwAA//8AAP+/AAD//////78AAAAAAAD/vwAA//////+//////wAA/7//////////vwAA//8AAP+///8AAAAA/78AAAAA////v///AAD///+/AAAAAAAA/7///wAA//8AgAAA/////wCA////////AIAAAAAA//8AgAAA//8AAP////8AAAAA////////AAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_tku3p")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_skrf3"]
+size = Vector3(0.125, 0.125, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qqguo"]
+
+[sub_resource type="Environment" id="Environment_tfihr"]
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1klld"]
+shader = ExtResource("13_xnlip")
+shader_parameter/fog_of_war_color_multiplier = 0.6
+
+[node name="Gameplay" type="CanvasLayer" unique_id=1012002971 node_paths=PackedStringArray("_gameCameraRoot", "_gameEnvironmentRoot", "_gameWorldMapRoot", "_gameWorldEntitiesRoot")]
+script = ExtResource("1_mkj3r")
+_gameCameraRoot = NodePath("GameplayView/MainSubViewport/GameCamera")
+_gameEnvironmentRoot = NodePath("GameplayView/MainSubViewport/GameEnvironment")
+_gameWorldMapRoot = NodePath("GameplayView/MainSubViewport/GameWorld/GameWorldMap")
+_gameWorldEntitiesRoot = NodePath("GameplayView/MainSubViewport/GameWorld/GameWorldEntities")
+
+[node name="GameplayControllers" type="Node" parent="." unique_id=909585824]
+
+[node name="GameplayView" type="SubViewportContainer" parent="." unique_id=2093123922]
+light_mask = 0
+visibility_layer = 1024
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="GameplayViewControllers" type="Node" parent="GameplayView" unique_id=10547838]
+
+[node name="MainSubViewport" type="SubViewport" parent="GameplayView" unique_id=626702265]
+handle_input_locally = false
+canvas_cull_mask = 4293950464
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="GameCamera" type="Node3D" parent="GameplayView/MainSubViewport" unique_id=1492446274 node_paths=PackedStringArray("_camera")]
+script = ExtResource("2_a0afp")
+_camera = NodePath("GameCamera")
+_followTarget = true
+_enableShake = true
+
+[node name="GameCamera" type="Camera3D" parent="GameplayView/MainSubViewport/GameCamera" unique_id=1323749059]
+cull_mask = 1007
+environment = ExtResource("1_uldsx")
+current = true
+
+[node name="SightWorkerRemoteTransform" type="RemoteTransform3D" parent="GameplayView/MainSubViewport/GameCamera/GameCamera" unique_id=1454176462]
+remote_path = NodePath("../../../../WorkerSightSubViewport/SightWorkerCamera")
+
+[node name="WorldWorkerRemoteTransform" type="RemoteTransform3D" parent="GameplayView/MainSubViewport/GameCamera/GameCamera" unique_id=1369454106]
+remote_path = NodePath("../../../../WorkerWorldSubViewport/WorldWorkderCamera")
+
+[node name="GameEnvironment" type="Node3D" parent="GameplayView/MainSubViewport" unique_id=80088713]
+script = ExtResource("4_uwft5")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="GameplayView/MainSubViewport/GameEnvironment" unique_id=1045098890]
+transform = Transform3D(-0.70710677, 0.61237246, -0.35355335, 0, 0.49999997, 0.86602545, 0.70710677, 0.61237246, -0.35355335, 0, 0, 0)
+layers = 8
+light_bake_mode = 0
+light_cull_mask = 4293919743
+shadow_enabled = true
+shadow_caster_mask = 4293919615
+
+[node name="GameWorld" type="Node3D" parent="GameplayView/MainSubViewport" unique_id=876414346]
+
+[node name="GameWorldMap" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld" unique_id=1889542928]
+script = ExtResource("5_gxuvb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=1806791614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D" unique_id=586481960]
+shape = SubResource("BoxShape3D_tfihr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D" unique_id=1092672219]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -0.00017223357, 0.0006814599, -0.00046331403)
+layers = 3
+material_override = ExtResource("2_yjry4")
+mesh = SubResource("BoxMesh_387xr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=2060521512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.365892)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D2" unique_id=1115467025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_m81o8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D2" unique_id=204638010]
+transform = Transform3D(6, 0, 0, 0, 5, 0, 0, 0, 5, 0, 2.5, 0)
+layers = 3
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("BoxMesh_387xr")
+
+[node name="blockbench_export4" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=1410337833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.311688, 0, 8.162949)
+collision_layer = 2304
+collision_mask = 7937
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4" unique_id=1329394537]
+shape = SubResource("BoxShape3D_tjxao")
+
+[node name="group7" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4" unique_id=882670374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, -0.03125)
+
+[node name="mesh" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7" unique_id=326951498]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, 0.0625)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_ivqaq")
+skeleton = NodePath("")
+
+[node name="group" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7" unique_id=993732517]
+
+[node name="group2" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group" unique_id=1935982032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3125, -0.0625, 0.03125)
+
+[node name="group4" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group2" unique_id=1977228139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+
+[node name="mesh2" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group2/group4" unique_id=856747470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_isnq0")
+skeleton = NodePath("")
+
+[node name="mesh3" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group2" unique_id=1531730074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_8ix7g")
+skeleton = NodePath("")
+
+[node name="group3" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group" unique_id=703252614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3125, -0.0625, 0.03125)
+
+[node name="group5" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group3" unique_id=1855429772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+
+[node name="mesh4" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group3/group5" unique_id=399821030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_3t4vf")
+skeleton = NodePath("")
+
+[node name="mesh5" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group3" unique_id=791513852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_6mavj")
+skeleton = NodePath("")
+
+[node name="group6" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group" unique_id=1690411014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1875, 0.25)
+
+[node name="mesh6" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group6" unique_id=1568207419]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_n6cop")
+skeleton = NodePath("")
+
+[node name="group8" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group6" unique_id=1790231832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0625, -0.125)
+
+[node name="mesh7" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group6/group8" unique_id=881202056]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xtgww")
+skeleton = NodePath("")
+
+[node name="group10" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group6/group8" unique_id=570820496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15625)
+
+[node name="mesh8" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export4/group7/group/group6/group8/group10" unique_id=210976474]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xs48a")
+skeleton = NodePath("")
+
+[node name="blockbench_export5" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=796255629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.756321, 0, 4.1791983)
+collision_layer = 2304
+collision_mask = 7937
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5" unique_id=2111599857]
+shape = SubResource("BoxShape3D_tjxao")
+
+[node name="group7" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5" unique_id=1206893250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, -0.03125)
+
+[node name="mesh" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7" unique_id=742339130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, 0.0625)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_ivqaq")
+skeleton = NodePath("")
+
+[node name="group" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7" unique_id=865344735]
+
+[node name="group2" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group" unique_id=837661808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3125, -0.0625, 0.03125)
+
+[node name="group4" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group2" unique_id=1277920030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+
+[node name="mesh2" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group2/group4" unique_id=1125832862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_isnq0")
+skeleton = NodePath("")
+
+[node name="mesh3" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group2" unique_id=1703474915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_8ix7g")
+skeleton = NodePath("")
+
+[node name="group3" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group" unique_id=1910358742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3125, -0.0625, 0.03125)
+
+[node name="group5" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group3" unique_id=51199907]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+
+[node name="mesh4" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group3/group5" unique_id=1564022148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_3t4vf")
+skeleton = NodePath("")
+
+[node name="mesh5" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group3" unique_id=22926428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_6mavj")
+skeleton = NodePath("")
+
+[node name="group6" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group" unique_id=891720319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1875, 0.25)
+
+[node name="mesh6" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group6" unique_id=1435901677]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_n6cop")
+skeleton = NodePath("")
+
+[node name="group8" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group6" unique_id=1409562116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0625, -0.125)
+
+[node name="mesh7" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group6/group8" unique_id=800107858]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xtgww")
+skeleton = NodePath("")
+
+[node name="group10" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group6/group8" unique_id=259276145]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15625)
+
+[node name="mesh8" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export5/group7/group/group6/group8/group10" unique_id=1051918998]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xs48a")
+skeleton = NodePath("")
+
+[node name="blockbench_export6" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=331657136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9872284, 0, 3.4835348)
+collision_layer = 2304
+collision_mask = 7937
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6" unique_id=1776593803]
+shape = SubResource("BoxShape3D_tjxao")
+
+[node name="group7" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6" unique_id=98456662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, -0.03125)
+
+[node name="mesh" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7" unique_id=805978065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109375, 0.0625)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_ivqaq")
+skeleton = NodePath("")
+
+[node name="group" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7" unique_id=2130882803]
+
+[node name="group2" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group" unique_id=153034979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3125, -0.0625, 0.03125)
+
+[node name="group4" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group2" unique_id=1527652559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0, 0)
+
+[node name="mesh2" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group2/group4" unique_id=153514721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_isnq0")
+skeleton = NodePath("")
+
+[node name="mesh3" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group2" unique_id=1014536013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_8ix7g")
+skeleton = NodePath("")
+
+[node name="group3" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group" unique_id=2022589182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3125, -0.0625, 0.03125)
+
+[node name="group5" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group3" unique_id=1490566911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, 0)
+
+[node name="mesh4" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group3/group5" unique_id=1201843883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03125, 0.0625, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_3t4vf")
+skeleton = NodePath("")
+
+[node name="mesh5" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group3" unique_id=1533012543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5625, 0.09375, 0)
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_6mavj")
+skeleton = NodePath("")
+
+[node name="group6" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group" unique_id=871588055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1875, 0.25)
+
+[node name="mesh6" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group6" unique_id=622124507]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_n6cop")
+skeleton = NodePath("")
+
+[node name="group8" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group6" unique_id=344678784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0625, -0.125)
+
+[node name="mesh7" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group6/group8" unique_id=2114229641]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xtgww")
+skeleton = NodePath("")
+
+[node name="group10" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group6/group8" unique_id=2002540874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15625)
+
+[node name="mesh8" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/blockbench_export6/group7/group/group6/group8/group10" unique_id=1030935315]
+layers = 33
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("ArrayMesh_xs48a")
+skeleton = NodePath("")
+
+[node name="GameWorldEntities" type="Node3D" parent="GameplayView/MainSubViewport/GameWorld" unique_id=2088436997]
+script = ExtResource("8_ra36t")
+_debugPlayerScene = ExtResource("7_lxc4c")
+
+[node name="RigidBody3D" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldEntities" unique_id=1934156839]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 1.921)
+collision_layer = 8192
+collision_mask = 6145
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldEntities/RigidBody3D" unique_id=550137091]
+shape = SubResource("BoxShape3D_skrf3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldEntities/RigidBody3D" unique_id=639226601]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 1, 0, 0, 0)
+layers = 128
+material_override = ExtResource("9_gforc")
+mesh = SubResource("BoxMesh_qqguo")
+
+[node name="WorkerSightSubViewport" type="SubViewport" parent="GameplayView" unique_id=905291138]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="SightWorkerCamera" type="Camera3D" parent="GameplayView/WorkerSightSubViewport" unique_id=710069454]
+cull_mask = 33766
+environment = SubResource("Environment_tfihr")
+current = true
+
+[node name="WorkerWorldSubViewport" type="SubViewport" parent="GameplayView" unique_id=348643096]
+handle_input_locally = false
+canvas_cull_mask = 4293918720
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="WorldWorkderCamera" type="Camera3D" parent="GameplayView/WorkerWorldSubViewport" unique_id=1870124532]
+cull_mask = 14
+environment = ExtResource("1_uldsx")
+current = true
+
+[node name="GameplayRenderer" type="ColorRect" parent="." unique_id=1350165498 node_paths=PackedStringArray("_gameViewport", "_sightViewport", "_worldViewport")]
+material = SubResource("ShaderMaterial_1klld")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("14_al1ao")
+_gameViewport = NodePath("../GameplayView/MainSubViewport")
+_sightViewport = NodePath("../GameplayView/WorkerSightSubViewport")
+_worldViewport = NodePath("../GameplayView/WorkerWorldSubViewport")
+
+[node name="GameplayInterface" type="Control" parent="." unique_id=324499896]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GameInterfaceManager" type="Node" parent="GameplayInterface" unique_id=1335942132]
+
+[node name="Hud" type="MarginContainer" parent="GameplayInterface" unique_id=245885837]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Weapon" type="Control" parent="GameplayInterface/Hud" unique_id=279182144]
+visibility_layer = 3072
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Grid" type="VBoxContainer" parent="GameplayInterface/Hud/Weapon" unique_id=1736670037]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -308.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Items" type="Control" parent="GameplayInterface/Hud/Weapon/Grid" unique_id=1013838561]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameplayInterface/Hud/Weapon/Grid/Items" unique_id=1505883081]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Item1" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer" unique_id=1307361206]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item1" unique_id=1750879475]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 0.24705882)
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item1" unique_id=1644712844]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="AvailbaleOverlay" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item1/Key" unique_id=428922877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Code" type="Label" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item1/Key/AvailbaleOverlay" unique_id=441677041]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -18.0
+offset_right = 7.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "4"
+label_settings = ExtResource("15_0a4j0")
+
+[node name="Item2" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer" unique_id=149105908]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item2" unique_id=264356953]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item2" unique_id=3066196]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Item3" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer" unique_id=1567707302]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item3" unique_id=1467066017]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Items/HBoxContainer/Item3" unique_id=1955997267]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Rack3" type="Control" parent="GameplayInterface/Hud/Weapon/Grid" unique_id=469044185]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack3" unique_id=842665126]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack3" unique_id=2102377277]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Rack2" type="Control" parent="GameplayInterface/Hud/Weapon/Grid" unique_id=1509433356]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack2" unique_id=1381664915]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack2" unique_id=591349180]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Rack1" type="Control" parent="GameplayInterface/Hud/Weapon/Grid" unique_id=958265242]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Display" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1" unique_id=1931359651]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.24705882)
+
+[node name="ActiveBorder" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display" unique_id=1896693021]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder" unique_id=198504336]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 4.0
+grow_vertical = 2
+
+[node name="Top" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder/Left" unique_id=2035227272]
+layout_mode = 1
+offset_right = 8.0
+offset_bottom = 4.0
+
+[node name="Bottom" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder/Left" unique_id=702281545]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+offset_right = 8.0
+grow_vertical = 0
+
+[node name="Right" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder" unique_id=1882935810]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Top" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder/Right" unique_id=104449006]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 4.0
+grow_horizontal = 0
+
+[node name="Bottom" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/ActiveBorder/Right" unique_id=548211428]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Ammo" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display" unique_id=1844218095]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -104.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="TextureRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/Ammo" unique_id=1982191618]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_mtg7y")
+stretch_mode = 3
+
+[node name="Count" type="Control" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display" unique_id=655994751]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Current" type="Label" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/Count" unique_id=1212261561]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -15.0
+offset_bottom = 33.0
+grow_horizontal = 2
+text = "125"
+label_settings = ExtResource("17_prs6k")
+horizontal_alignment = 2
+autowrap_trim_flags = 0
+justification_flags = 0
+
+[node name="Zeros" type="Label" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/Count/Current" unique_id=572647026]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0000"
+label_settings = ExtResource("18_xc1pv")
+horizontal_alignment = 2
+autowrap_trim_flags = 0
+justification_flags = 0
+
+[node name="Clip" type="Label" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Display/Count" unique_id=1241152030]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 17.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "125"
+label_settings = ExtResource("19_0121p")
+horizontal_alignment = 2
+autowrap_trim_flags = 0
+justification_flags = 0
+
+[node name="Key" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1" unique_id=596976458]
+visibility_layer = 3072
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="AvailbaleOverlay" type="ColorRect" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Key" unique_id=544149552]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Code" type="Label" parent="GameplayInterface/Hud/Weapon/Grid/Rack1/Key/AvailbaleOverlay" unique_id=1095001646]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -18.0
+offset_right = 7.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = ExtResource("15_0a4j0")
+autowrap_trim_flags = 0
+justification_flags = 0
+
+[node name="Current" type="ColorRect" parent="GameplayInterface/Hud/Weapon" unique_id=1468799164]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -476.0
+offset_top = -48.0
+offset_right = -348.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.25, 0.25, 0.25, 0.24705882)
+
+[node name="Label" type="Label" parent="GameplayInterface/Hud/Weapon/Current" unique_id=1507021402]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -22.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "APDS-T"
+label_settings = ExtResource("20_3i4dk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minimap" type="Control" parent="GameplayInterface/Hud" unique_id=412293737]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Map" type="ColorRect" parent="GameplayInterface/Hud/Minimap" unique_id=904265122]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -268.0
+offset_right = 268.0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Crew" type="Control" parent="GameplayInterface/Hud" unique_id=969678690]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridContainer" type="GridContainer" parent="GameplayInterface/Hud/Crew" unique_id=80129329]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Hud/Crew/GridContainer" unique_id=2118952125]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/Hud/Crew/GridContainer" unique_id=1784610996]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="ColorRect3" type="ColorRect" parent="GameplayInterface/Hud/Crew/GridContainer" unique_id=1130287290]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="ColorRect4" type="ColorRect" parent="GameplayInterface/Hud/Crew/GridContainer" unique_id=892345109]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Health" type="Control" parent="GameplayInterface/Hud" unique_id=768429734]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameplayInterface/Hud/Health" unique_id=2014731765]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Hud/Health/VBoxContainer" unique_id=744536197]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.24705882)
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Hud/Health/VBoxContainer/ColorRect" unique_id=1857687078]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = -16.0
+offset_right = 36.0
+offset_bottom = 16.0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameplayInterface/Hud/Health/VBoxContainer/ColorRect" unique_id=1573582422]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -26.0
+offset_right = -8.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000"
+label_settings = ExtResource("21_557cn")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="GameplayInterface/Hud/Health/VBoxContainer/ColorRect/Label" unique_id=253214390]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0000"
+label_settings = ExtResource("22_s3ef6")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/Hud/Health/VBoxContainer" unique_id=231741001]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+color = Color(0.25, 0.25, 0.25, 0.09019608)
+
+[node name="Cursor" type="Control" parent="GameplayInterface" unique_id=159592075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AimTarget" type="Control" parent="GameplayInterface/Cursor" unique_id=1131817240]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimTarget" unique_id=443594620]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimTarget/ColorRect" unique_id=32490363]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AimPoint" type="Control" parent="GameplayInterface/Cursor" unique_id=1042304140]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimPoint" unique_id=376289098]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimPoint/ColorRect" unique_id=1463943397]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
