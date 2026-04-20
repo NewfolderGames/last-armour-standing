@@ -14,6 +14,15 @@ public partial class Cartridge : ResourceDefinition
 }
 
 [Serializable]
+public class CartridgeUse
+{
+	[XmlElement("recoil")]
+	public float Recoil;
+	[XmlElement("projectileCount")]
+	public int ProjectileCount;
+}
+
+[Serializable]
 public class CartridgeProjectile
 {
 	[XmlElement("tracer")]

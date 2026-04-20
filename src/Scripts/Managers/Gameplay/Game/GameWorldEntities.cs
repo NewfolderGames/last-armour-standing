@@ -2,7 +2,7 @@ using Godot;
 using LastArmourStanding.Game.Contexts.Gameplay;
 using LastArmourStanding.Scripts.Entities.Unit;
 
-namespace LastArmourStanding.Scripts.Managers.Gameplay;
+namespace LastArmourStanding.Scripts.Managers.Gameplay.Game;
 
 public partial class GameWorldEntities : Node3D, IGameplayContextConsumer
 {

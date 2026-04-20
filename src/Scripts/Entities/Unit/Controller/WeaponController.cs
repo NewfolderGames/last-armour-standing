@@ -16,10 +16,10 @@ public partial class WeaponController : Node3D
 
     [ExportCategory("Weapon Selection")]
     [Export] private int _weaponIndex;
-    
-    public WeaponProcessor SelectedWeapon => _processors[_weaponIndex % _processors.Count];
+
+    public WeaponProcessor SelectedWeapon => _processors.Count == 0 ? null : _processors[_weaponIndex % _processors.Count];
     public int SelectedWeaponIndex => _weaponIndex;
-    
+
     public void SetGameplayContext(GameplayContext gameplayContext) => _gameplayContext = gameplayContext;
 
     public override void _Ready()
@@ -27,27 +27,44 @@ public partial class WeaponController : Node3D
         if (_useWeaponFromGamePlayContext) UseWeaponsFromGameplayContext();
     }
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        if (SelectedWeapon != null)
+        {
+            SelectedWeapon.Process(delta);
+            _gameplayContext?.Interface.SetCursorAimSpread(SelectedWeapon.Spread);
+        }
+    }
+
     public void UseWeapon()
     {
+        if (SelectedWeapon == null) return;
         var used = SelectedWeapon.Use();
-        //asdf
+        _gameplayContext?.Interface.SetCursorAimSpread(SelectedWeapon.Spread);
     }
 
     public void SelectWeapon(int index)
     {
-        _weaponIndex = index;
-        // asdfsfd
+        if (_processors.Count == 0)
+        {
+            _weaponIndex = 0;
+            return;
+        }
+        _weaponIndex = index % _processors.Count;
+        _gameplayContext?.Interface.SetCursorAimSpread(SelectedWeapon.Spread);
     }
-    
+
     private void UseWeaponsFromGameplayContext()
     {
-        _processors.Clear();
-        _weaponIndex = 0;
+        if (_gameplayContext == null) return;
 
+        _processors.Clear();
         foreach (var weapon in _gameplayContext.State.Weapon.Weapons)
         {
             _processors.Add(new WeaponProcessor(weapon));
         }
+        SelectWeapon(0);
     }
-    
+
 }

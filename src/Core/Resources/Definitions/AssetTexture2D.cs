@@ -9,7 +9,6 @@ namespace LastArmourStanding.Core.Resources.Definitions;
 [ResourceDefinition("core", "$texture")]
 public partial class AssetTexture2D : ResourceDefinition
 {
-    [Export]
     [XmlElement("path")]
-    public string Path { get; private set; }
+    public string Path;
 }

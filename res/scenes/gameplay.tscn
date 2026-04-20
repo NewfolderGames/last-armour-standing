@@ -2,16 +2,17 @@
 
 [ext_resource type="Script" uid="uid://52hj6687786l" path="res://src/Scripts/Managers/Gameplay/GameplayManager.cs" id="1_mkj3r"]
 [ext_resource type="Environment" uid="uid://b0533xoix7ria" path="res://res/environments/ingame.tres" id="1_uldsx"]
-[ext_resource type="Script" uid="uid://dxva5kmu4rog8" path="res://src/Scripts/Managers/Gameplay/GameCamera.cs" id="2_a0afp"]
+[ext_resource type="Script" uid="uid://dxva5kmu4rog8" path="res://src/Scripts/Managers/Gameplay/Game/GameCamera.cs" id="2_a0afp"]
 [ext_resource type="Material" uid="uid://db3i0i2suor8h" path="res://res/materials/ground.tres" id="2_yjry4"]
 [ext_resource type="Material" uid="uid://oyhvrsjmsyli" path="res://res/materials/building.tres" id="3_a0afp"]
-[ext_resource type="Script" uid="uid://bv33s6pj3rprc" path="res://src/Scripts/Managers/Gameplay/GameEnvironment.cs" id="4_uwft5"]
-[ext_resource type="Script" uid="uid://cf62prqyffwyw" path="res://src/Scripts/Managers/Gameplay/GameWorldMap.cs" id="5_gxuvb"]
+[ext_resource type="Script" uid="uid://bv33s6pj3rprc" path="res://src/Scripts/Managers/Gameplay/Game/GameEnvironment.cs" id="4_uwft5"]
+[ext_resource type="Script" uid="uid://cf62prqyffwyw" path="res://src/Scripts/Managers/Gameplay/Game/GameWorldMap.cs" id="5_gxuvb"]
 [ext_resource type="PackedScene" uid="uid://vqap37eelg4w" path="res://res/scenes/entities/player_tank.tscn" id="7_lxc4c"]
-[ext_resource type="Script" uid="uid://cq587owcjmdua" path="res://src/Scripts/Managers/Gameplay/GameWorldEntities.cs" id="8_ra36t"]
+[ext_resource type="Script" uid="uid://cq587owcjmdua" path="res://src/Scripts/Managers/Gameplay/Game/GameWorldEntities.cs" id="8_ra36t"]
 [ext_resource type="Material" uid="uid://dxv1a7cnwng4k" path="res://res/materials/projectile_tracer.tres" id="9_gforc"]
+[ext_resource type="Script" uid="uid://6dyrac4y71rh" path="res://src/Scripts/Managers/Gameplay/Interface/Hud/InterfaceHud.cs" id="13_bafra"]
 [ext_resource type="Shader" uid="uid://ctjwdbdaqjvbf" path="res://res/materials/shaders/game_screen_renderer.gdshader" id="13_xnlip"]
-[ext_resource type="Script" uid="uid://bfi4xwxwq6m0e" path="res://src/Scripts/Rendering/Screen/GameScreenRenderer.cs" id="14_al1ao"]
+[ext_resource type="Script" uid="uid://bfi4xwxwq6m0e" path="res://src/Scripts/Managers/Gameplay/Renderer/GameplayRenderer.cs" id="14_al1ao"]
 [ext_resource type="LabelSettings" uid="uid://dgboxutx4scub" path="res://res/themes/ui/hud/weapon/rack_key_text.tres" id="15_0a4j0"]
 [ext_resource type="Texture2D" uid="uid://dwrwrx0acf4ow" path="res://res/textures/ui/round_apds_1.png" id="16_mtg7y"]
 [ext_resource type="LabelSettings" uid="uid://c4p6ub1ec44bc" path="res://res/themes/ui/hud/weapon/rack_count_current.tres" id="17_prs6k"]
@@ -20,6 +21,9 @@
 [ext_resource type="LabelSettings" uid="uid://c12g2n3ttalhr" path="res://res/themes/ui/hud/weapon/current_type.tres" id="20_3i4dk"]
 [ext_resource type="LabelSettings" uid="uid://dmc3f3rfowbku" path="res://res/themes/ui/hud/health/current.tres" id="21_557cn"]
 [ext_resource type="LabelSettings" uid="uid://dsp2s3p6dbtay" path="res://res/themes/ui/hud/health/current_zero.tres" id="22_s3ef6"]
+[ext_resource type="Script" uid="uid://bfko72lgiay8v" path="res://src/Scripts/Managers/Gameplay/Interface/Cursor/InterfaceCursor.cs" id="22_vv1gi"]
+[ext_resource type="Script" uid="uid://ba8ki3o10bnhn" path="res://src/Scripts/Managers/Gameplay/Interface/Cursor/AimTarget.cs" id="23_euil7"]
+[ext_resource type="Script" uid="uid://c02ji31of7k7y" path="res://src/Scripts/Managers/Gameplay/Interface/Cursor/AimPoint.cs" id="24_o37sx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tfihr"]
 size = Vector3(100, 100, 100)
@@ -28,6 +32,9 @@ size = Vector3(100, 100, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m81o8"]
 size = Vector3(6, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bafra"]
+size = Vector3(6, 5, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tjxao"]
 size = Vector3(0.615, 1, 1)
@@ -329,14 +336,15 @@ ambient_light_energy = 0.0
 shader = ExtResource("13_xnlip")
 shader_parameter/fog_of_war_color_multiplier = 0.6
 
-[node name="Gameplay" type="CanvasLayer" unique_id=1012002971 node_paths=PackedStringArray("_gameCameraRoot", "_gameEnvironmentRoot", "_gameWorldMapRoot", "_gameWorldEntitiesRoot")]
+[node name="Gameplay" type="CanvasLayer" unique_id=1012002971 node_paths=PackedStringArray("_gameplayRenderer", "_gameCameraRoot", "_gameEnvironmentRoot", "_gameWorldMapRoot", "_gameWorldEntitiesRoot", "_interfaceCursorRoot", "_interfaceHudRoot")]
 script = ExtResource("1_mkj3r")
+_gameplayRenderer = NodePath("GameplayRenderer")
 _gameCameraRoot = NodePath("GameplayView/MainSubViewport/GameCamera")
 _gameEnvironmentRoot = NodePath("GameplayView/MainSubViewport/GameEnvironment")
 _gameWorldMapRoot = NodePath("GameplayView/MainSubViewport/GameWorld/GameWorldMap")
 _gameWorldEntitiesRoot = NodePath("GameplayView/MainSubViewport/GameWorld/GameWorldEntities")
-
-[node name="GameplayControllers" type="Node" parent="." unique_id=909585824]
+_interfaceCursorRoot = NodePath("GameplayInterface/Cursor")
+_interfaceHudRoot = NodePath("GameplayInterface/Hud")
 
 [node name="GameplayView" type="SubViewportContainer" parent="." unique_id=2093123922]
 light_mask = 0
@@ -347,8 +355,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-
-[node name="GameplayViewControllers" type="Node" parent="GameplayView" unique_id=10547838]
 
 [node name="MainSubViewport" type="SubViewport" parent="GameplayView" unique_id=626702265]
 handle_input_locally = false
@@ -411,6 +417,19 @@ shape = SubResource("BoxShape3D_m81o8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D2" unique_id=204638010]
 transform = Transform3D(6, 0, 0, 0, 5, 0, 0, 0, 5, 0, 2.5, 0)
+layers = 3
+material_override = ExtResource("3_a0afp")
+mesh = SubResource("BoxMesh_387xr")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap" unique_id=1297084772]
+transform = Transform3D(0.8974894, 0, -0.441036, 0, 1, 0, 0.441036, 0, 0.8974894, 9.726203, 0, -0.1564002)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D3" unique_id=355008189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_bafra")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GameplayView/MainSubViewport/GameWorld/GameWorldMap/StaticBody3D3" unique_id=156491124]
+transform = Transform3D(6, 0, 0, 0, 5, 0, 0, 0, 10, 0, 2.5, 0)
 layers = 3
 material_override = ExtResource("3_a0afp")
 mesh = SubResource("BoxMesh_387xr")
@@ -737,8 +756,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="GameInterfaceManager" type="Node" parent="GameplayInterface" unique_id=1335942132]
-
 [node name="Hud" type="MarginContainer" parent="GameplayInterface" unique_id=245885837]
 layout_mode = 1
 anchors_preset = 15
@@ -751,6 +768,7 @@ theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
+script = ExtResource("13_bafra")
 
 [node name="Weapon" type="Control" parent="GameplayInterface/Hud" unique_id=279182144]
 visibility_layer = 3072
@@ -1289,7 +1307,7 @@ custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 0.09019608)
 
-[node name="Cursor" type="Control" parent="GameplayInterface" unique_id=159592075]
+[node name="Cursor" type="Control" parent="GameplayInterface" unique_id=159592075 node_paths=PackedStringArray("_aimTarget", "_aimPoint")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1297,73 +1315,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("22_vv1gi")
+_aimTarget = NodePath("AimTarget")
+_aimPoint = NodePath("AimPoint")
 
 [node name="AimTarget" type="Control" parent="GameplayInterface/Cursor" unique_id=1131817240]
 anchors_preset = 0
 mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimTarget" unique_id=443594620]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimTarget/ColorRect" unique_id=32490363]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -7.0
-offset_top = -7.0
-offset_right = 7.0
-offset_bottom = 7.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+script = ExtResource("23_euil7")
 
 [node name="AimPoint" type="Control" parent="GameplayInterface/Cursor" unique_id=1042304140]
 anchors_preset = 0
 mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimPoint" unique_id=376289098]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect" type="ColorRect" parent="GameplayInterface/Cursor/AimPoint/ColorRect" unique_id=1463943397]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = -3.0
-offset_right = 3.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+script = ExtResource("24_o37sx")

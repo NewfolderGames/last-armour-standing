@@ -23,6 +23,15 @@ public class WeaponDisplay
 }
 
 [Serializable]
+public class WeaponEquip
+{
+    [XmlElement("slot")]
+    public string Slot;
+    [XmlElement("equipTime")]
+    public int EquipTime;
+}
+
+[Serializable]
 public class WeaponAmmo
 {
     [XmlElement("clipSize")]
@@ -42,10 +51,12 @@ public class WeaponUse
 {
     [XmlElement("ammoCount")]
     public int AmmoCount;
-    [XmlElement("projectileCount")]
-    public int ProjectileCount;
     [XmlElement("cooldownTime")]
     public int CooldownTime;
+    [XmlElement("spreadMin")]
+    public float SpreadMin;
+    [XmlElement("spreadMax")]
+    public float SpreadMax;
     [XmlElement("recoilMultiplier")]
     public float RecoilMultiplier;
 }

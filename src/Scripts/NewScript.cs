@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace LastArmourStanding.Scripts;
 
 public partial class NewScript : Node
 {

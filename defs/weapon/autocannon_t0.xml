@@ -11,8 +11,9 @@
     </ammo>
     <use>
         <ammoCount>1</ammoCount>
-        <projectileCount>1</projectileCount>
         <cooldownTime>250</cooldownTime>
+        <spreadMin>1.5</spreadMin>
+        <spreadMax>5</spreadMax>
         <recoilMultiplier>1</recoilMultiplier>
     </use>
 </Def>

@@ -305,21 +305,25 @@ _enableMovement = true
 
 [node name="Controllers" type="Node3D" parent="." unique_id=607031966]
 
-[node name="AimController" type="Node3D" parent="Controllers" unique_id=1901737897 node_paths=PackedStringArray("_aimRotationRootNode", "_aimRotationNode", "_aimPointRootNode", "_aimPointNode")]
+[node name="AimController" type="Node3D" parent="Controllers" unique_id=1901737897 node_paths=PackedStringArray("_aimRotationRootNode", "_aimRotationNode", "_aimPointRootNode", "_aimPointNode", "_aimPointDesiredNode")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9123732e-08, 0.296875, -0.21875)
 script = ExtResource("2_17at2")
 _enableDesignation = true
 _useScreenToWorldDesignation = true
 _screenToWorldCollisionMask = 6401
+_pushScreenToWorldDesignationToUi = true
 _aimRotationRootNode = NodePath("AimRotationRoot")
 _aimRotationNode = NodePath("AimRotationRoot/AimRotation")
 _aimPointRootNode = NodePath("AimPointRoot")
 _aimPointNode = NodePath("AimPointRoot/AimPoint")
+_aimPointDesiredNode = NodePath("AimPointRoot/AimDesiredPoint")
 _aimPointCollisionMask = 6401
 
 [node name="AimPointRoot" type="Node3D" parent="Controllers/AimController" unique_id=908611308]
 
 [node name="AimPoint" type="Node3D" parent="Controllers/AimController/AimPointRoot" unique_id=1289439855]
+
+[node name="AimDesiredPoint" type="Node3D" parent="Controllers/AimController/AimPointRoot" unique_id=613053826]
 
 [node name="AimRotationRoot" type="Node3D" parent="Controllers/AimController" unique_id=2114590106]
 
